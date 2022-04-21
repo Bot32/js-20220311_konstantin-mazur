@@ -37,43 +37,21 @@ export default class Page {
     this.rangePicker.element.dataset.pageElement = 'rangePicker';
     this.subElements.rangePickerContainer.append(this.rangePicker.element);
 
-    const columnChartConfig = {
-      label: 'orders',
-      link: '/sales',
-      url: 'api/dashboard/orders',
-      range: {
-        from: from,
-        to: to,
-      }
-    };
+    const range = { from: from, to: to };
 
-    columnChartConfig.label = 'orders';
-    columnChartConfig.link = '/orders';
-    columnChartConfig.url = 'api/dashboard/orders';
-    this.columnChartOrders = new ColumnChart(columnChartConfig);
+    this.columnChartOrders = new ColumnChart({ label: 'orders', link: '/orders', url: 'api/dashboard/orders', range: range });
     this.columnChartOrders.element.dataset.pageElement = 'ordersChart';
-    this.columnChartOrders.element.classList.add('dashboard__chart_orders');
-    this.subElements.columncChartsContainer.append(this.columnChartOrders.element);
-    columnChartConfig.label = 'sales';
-    columnChartConfig.link = '/sales';
-    columnChartConfig.url = 'api/dashboard/sales';
-    this.columnChartSales = new ColumnChart(columnChartConfig);
+    this.subElements.columnChartOrdersContainer.append(this.columnChartOrders.element);
+
+    this.columnChartSales = new ColumnChart({ label: 'sales', link: '/sales', url: 'api/dashboard/sales', range: range });
     this.columnChartSales.element.dataset.pageElement = 'salesChart';
-    this.columnChartSales.element.classList.add('dashboard__chart_sales');
-    this.subElements.columncChartsContainer.append(this.columnChartSales.element);
-    columnChartConfig.label = 'customers';
-    columnChartConfig.link = '/customers';
-    columnChartConfig.url = 'api/dashboard/customers';
-    this.columnChartCustomers = new ColumnChart(columnChartConfig);
+    this.subElements.columnChartSalesContainer.append(this.columnChartSales.element);
+
+    this.columnChartCustomers = new ColumnChart({ label: 'customers', link: '/customers', url: 'api/dashboard/customers', range: range });
     this.columnChartCustomers.element.dataset.pageElement = 'customersChart';
-    this.columnChartCustomers.element.classList.add('dashboard__chart_customers');
-    this.subElements.columncChartsContainer.append(this.columnChartCustomers.element);
+    this.subElements.columnChartCustomersContainer.append(this.columnChartCustomers.element);
     
-    const tableConfig = {
-      url: 'api/dashboard/bestsellers',
-      isSortLocally: true
-    };
-    this.sortableTable = new SortableTable(header, tableConfig);
+    this.sortableTable = new SortableTable(header, { url: 'api/dashboard/bestsellers', isSortLocally: true});
     this.sortableTable.element.dataset.pageElement = 'sortableTable';
     this.subElements.sortableTableContainer.append(this.sortableTable.element);
 
@@ -87,9 +65,13 @@ export default class Page {
       <div class="dashboard full-height flex-column">
         <div class="content__top-panel">
           <h2 class="page-title">Панель управления</h2>
-            <div data-page-element="rangePickerContainer"></div>
+          <div data-page-element="rangePickerContainer"></div>
         </div>
-        <div data-page-element="columncChartsContainer" class="dashboard__charts"></div>
+        <div data-page-element="columncChartsContainer" class="dashboard__charts">
+          <div data-page-element="columnChartOrdersContainer" class="dashboard__chart_orders"></div>
+          <div data-page-element="columnChartSalesContainer" class="dashboard__chart_sales"></div>
+          <div data-page-element="columnChartCustomersContainer" class="dashboard__chart_customers"></div>
+        </div>
         <h3 class="block-title">Лидеры продаж</h3>
         <div data-page-element="sortableTableContainer"></div>
       </div>
